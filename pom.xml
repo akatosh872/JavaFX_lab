@@ -41,7 +41,15 @@
       <artifactId>junit-jupiter-engine</artifactId>
       <version>${junit.version}</version>
       <scope>test</scope>
-    </dependency>  </dependencies>
+    </dependency>
+
+    <dependency>
+      <groupId>com.github.oshi</groupId>
+      <artifactId>oshi-core</artifactId>
+      <version>6.4.13</version>
+    </dependency>
+
+  </dependencies>
 
   <build>
     <plugins>
@@ -63,7 +71,7 @@
             <!-- Default configuration for running with: mvn clean javafx:run -->
             <id>default-cli</id>
             <configuration>
-              <mainClass>com.example.jfxtest/com.example.jfxtest.RunMain</mainClass>
+              <mainClass>com.example.jfxtest/com.example.jfxtest.StageController</mainClass>
               <launcher>app</launcher>
               <jlinkZipName>app</jlinkZipName>
               <jlinkImageName>app</jlinkImageName>
