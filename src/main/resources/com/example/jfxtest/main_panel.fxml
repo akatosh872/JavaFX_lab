@@ -9,10 +9,11 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
 <Pane fx:id="mainPanel" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.jfxtest.DisplayController">
     <children>
-        <MenuBar prefHeight="25.0" prefWidth="640.0">
+        <MenuBar>
             <menus>
                 <Menu mnemonicParsing="false" text="OS">
                <items>
@@ -24,9 +25,14 @@
                         <MenuItem fx:id="CPULoading" mnemonicParsing="false" onAction="#showCPULoading" text="CPU Loading" />
                     </items>
                 </Menu>
+            <Menu mnemonicParsing="false" text="Memory">
+              <items>
+                <MenuItem fx:id="ShowMemoryItem" mnemonicParsing="false" onAction="#showMemoryInfo" text="Show Memory" />
+              </items>
+            </Menu>
             </menus>
         </MenuBar>
-        <TabPane fx:id="CPUtabs" layoutY="25.0" prefHeight="455.0" prefWidth="640.0">
+        <TabPane fx:id="CPUtabs" layoutY="25.0" prefHeight="455.0" prefWidth="640.0" visible="false">
             <tabs>
                 <Tab closable="false" text="Information">
                     <content>
@@ -37,7 +43,7 @@
                    <content>
                       <Pane fx:id="cpuLoadPane" prefHeight="200.0" prefWidth="200.0">
                          <children>
-                             <LineChart fx:id="cpuLoadChart" layoutX="14" layoutY="14" prefHeight="320.0" prefWidth="601.0">
+                             <LineChart fx:id="cpuLoadChart" layoutX="14" layoutY="-6.0" legendVisible="false" prefHeight="347.0" prefWidth="601.0" title="CPU loading" titleSide="BOTTOM">
                                  <xAxis>
                                      <NumberAxis side="BOTTOM" />
                                  </xAxis>
@@ -51,10 +57,19 @@
                 </Tab>
             </tabs>
         </TabPane>
-        <Label fx:id="osLabel" layoutX="10.0" layoutY="50.0" />
-        <Label fx:id="systemBitnessLabel" layoutX="10.0" layoutY="70.0" />
-        <Label fx:id="computerNameLabel" layoutX="10.0" layoutY="90.0" />
-        <Label fx:id="memoryLabel" layoutX="10.0" layoutY="110.0" />
-        <Label fx:id="totalMemoryLabel" layoutX="10.0" layoutY="130.0" />
+        <Label fx:id="osLabel" layoutX="10.0" layoutY="50.0">
+         <font>
+            <Font size="16.0" />
+         </font></Label>
+        <Label fx:id="memoryLabel" layoutX="37.0" layoutY="365.0" />
+        <Label fx:id="totalMemoryLabel" layoutX="37.0" layoutY="385.0" />
+      <LineChart fx:id="memoryChart" createSymbols="false" layoutX="18.0" layoutY="25.0" legendVisible="false" prefHeight="340.0" prefWidth="590.0" title="Memory Loading" titleSide="BOTTOM">
+        <xAxis>
+          <NumberAxis side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis side="LEFT" />
+        </yAxis>
+      </LineChart>
     </children>
 </Pane>
