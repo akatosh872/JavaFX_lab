@@ -17,18 +17,18 @@ public class SystemController {
     }
 
     public String getOS() {
-        String osInfo = "";
-        osInfo += "OS: " + os.toString() + "\n";
-        osInfo += "Family: " + os.getFamily() + "\n";
-        osInfo += "Manufacturer: " + os.getManufacturer() + "\n";
-        osInfo += "Computer name: " + System.getenv("COMPUTERNAME") + "\n";
-        osInfo += "System bytness: " + System.getProperty("sun.arch.data.model") + "-bit" + "\n";
-        osInfo += "Version: " + os.getVersionInfo().toString() + "\n";
-        osInfo += "Booted Uptime: " + formatUptime(os.getSystemBootTime()) + "\n";
-        osInfo += "Current Process ID: " + os.getProcessId() + "\n";
-        osInfo += "Current Thread Count: " + os.getThreadCount() + "\n";
-        osInfo += "Process Count: " + os.getProcessCount() + "\n";
-        return osInfo;
+        StringBuilder osInfo = new StringBuilder();
+        osInfo.append("OS: ").append(os.toString()).append("\n");
+        osInfo.append("Family: ").append(os.getFamily()).append("\n");
+        osInfo.append("Manufacturer: ").append(os.getManufacturer()).append("\n");
+        osInfo.append("Computer name: ").append(System.getenv("COMPUTERNAME")).append("\n");
+        osInfo.append("System bytness: ").append(System.getProperty("sun.arch.data.model")).append("-bit").append("\n");
+        osInfo.append("Version: ").append(os.getVersionInfo().toString()).append("\n");
+        osInfo.append("Booted Uptime: ").append(formatUptime(os.getSystemBootTime())).append("\n");
+        osInfo.append("Current Process ID: ").append(os.getProcessId()).append("\n");
+        osInfo.append("Current Thread Count: ").append(os.getThreadCount()).append("\n");
+        osInfo.append("Process Count: ").append(os.getProcessCount()).append("\n");
+        return osInfo.toString();
     }
 
     private String formatUptime(long seconds) {
@@ -42,14 +42,9 @@ public class SystemController {
         return hardware.getMemory().toString();
     }
 
-    public String getTotalMemory() {
-        GlobalMemory memory = hardware.getMemory();
-        return memory.getTotal() / (1024 * 1024 * 1024) + " GB";
-    }
-
     public double getUsedMemoryPercentage() {
         GlobalMemory memory = hardware.getMemory();
-        return (double) (memory.getTotal() - memory.getAvailable()) / (1024 * 1024 * 1024);
+        return (double) (memory.getTotal() - memory.getAvailable()) / memory.getTotal() * 100;
     }
 
     public String getCPU() {
@@ -57,7 +52,7 @@ public class SystemController {
         return processor.toString();
     }
 
-    public Double getCPULoad () {
+    public Double getCPULoad() {
         CentralProcessor processor = hardware.getProcessor();
         return processor.getSystemCpuLoad(300);
     }

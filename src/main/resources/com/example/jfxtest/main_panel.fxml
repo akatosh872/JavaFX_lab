@@ -9,67 +9,90 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="mainPanel" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.jfxtest.DisplayController">
+<StackPane fx:id="mainPanel" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.jfxtest.DisplayController">
     <children>
-        <MenuBar>
-            <menus>
-                <Menu mnemonicParsing="false" text="OS">
-               <items>
-                  <MenuItem fx:id="osMenuItem" mnemonicParsing="false" onAction="#showOSInfo" text="ShowOS" />
-               </items></Menu>
-                <Menu fx:id="CPUInformation" mnemonicParsing="false" text="CPU">
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#showCPUInfo" text="Information" />
-                        <MenuItem fx:id="CPULoading" mnemonicParsing="false" onAction="#showCPULoading" text="CPU Loading" />
-                    </items>
-                </Menu>
-            <Menu mnemonicParsing="false" text="Memory">
-              <items>
-                <MenuItem fx:id="ShowMemoryItem" mnemonicParsing="false" onAction="#showMemoryInfo" text="Show Memory" />
-              </items>
-            </Menu>
-            </menus>
-        </MenuBar>
-        <TabPane fx:id="CPUtabs" layoutY="25.0" prefHeight="455.0" prefWidth="640.0" visible="false">
-            <tabs>
-                <Tab closable="false" text="Information">
-                    <content>
-                        <Label fx:id="cpuLabel" />
-                    </content>
-                </Tab>
-                <Tab closable="false" text="CPU Loading">
-                   <content>
-                      <Pane fx:id="cpuLoadPane" prefHeight="200.0" prefWidth="200.0">
-                         <children>
-                             <LineChart fx:id="cpuLoadChart" layoutX="14" layoutY="-6.0" legendVisible="false" prefHeight="347.0" prefWidth="601.0" title="CPU loading" titleSide="BOTTOM">
-                                 <xAxis>
-                                     <NumberAxis side="BOTTOM" />
-                                 </xAxis>
-                                 <yAxis>
-                                     <NumberAxis autoRanging="false" side="LEFT" upperBound="100" />
-                                 </yAxis>
-                             </LineChart>
-                         </children>
-                      </Pane>
-                   </content>
-                </Tab>
-            </tabs>
-        </TabPane>
-        <Label fx:id="osLabel" layoutX="10.0" layoutY="50.0">
-         <font>
-            <Font size="16.0" />
-         </font></Label>
-        <Label fx:id="memoryLabel" layoutX="37.0" layoutY="365.0" />
-        <Label fx:id="totalMemoryLabel" layoutX="37.0" layoutY="385.0" />
-      <LineChart fx:id="memoryChart" createSymbols="false" layoutX="18.0" layoutY="25.0" legendVisible="false" prefHeight="340.0" prefWidth="590.0" title="Memory Loading" titleSide="BOTTOM">
-        <xAxis>
-          <NumberAxis side="BOTTOM" />
-        </xAxis>
-        <yAxis>
-          <NumberAxis side="LEFT" />
-        </yAxis>
-      </LineChart>
+        <VBox>
+            <MenuBar fx:id="menuBar">
+                <menus>
+                    <Menu mnemonicParsing="false" text="OS">
+                        <items>
+                            <MenuItem fx:id="osMenuItem" mnemonicParsing="false" onAction="#showOSInfo" text="Show OS" />
+                        </items>
+                    </Menu>
+                    <Menu fx:id="CPUInformation" mnemonicParsing="false" text="CPU">
+                        <items>
+                            <MenuItem mnemonicParsing="false" onAction="#showCPUInfo" text="Information" />
+                            <MenuItem fx:id="CPULoading" mnemonicParsing="false" onAction="#showCPULoading" text="CPU Loading" />
+                        </items>
+                    </Menu>
+                    <Menu mnemonicParsing="false" text="Memory">
+                        <items>
+                            <MenuItem fx:id="ShowMemoryItem" mnemonicParsing="false" onAction="#showMemoryInfo" text="Show Memory" />
+                        </items>
+                    </Menu>
+                </menus>
+            </MenuBar>
+            <StackPane>
+                <Pane fx:id="osPane" visible="false">
+                    <children>
+                        <Label fx:id="osLabel" layoutX="10.0" layoutY="5.0">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </Pane>
+                <Pane fx:id="cpuPane" visible="false">
+                    <children>
+                        <TabPane fx:id="CPUtabs" prefHeight="455.0" prefWidth="640.0">
+                            <tabs>
+                                <Tab closable="false" text="Information">
+                                    <content>
+                                        <Label fx:id="cpuLabel">
+                                            <font>
+                                                <Font size="16.0" />
+                                            </font>
+                                        </Label>
+                                    </content>
+                                </Tab>
+                                <Tab closable="false" text="CPU Loading">
+                                    <content>
+                                        <Pane fx:id="cpuLoadPane" prefHeight="200.0" prefWidth="200.0">
+                                            <children>
+                                                <LineChart fx:id="cpuLoadChart" animated="false" legendVisible="false" title="CPU loading" titleSide="BOTTOM">
+                                                    <xAxis>
+                                                        <NumberAxis side="BOTTOM" />
+                                                    </xAxis>
+                                                    <yAxis>
+                                                        <NumberAxis autoRanging="false" side="LEFT" upperBound="100" />
+                                                    </yAxis>
+                                                </LineChart>
+                                            </children>
+                                        </Pane>
+                                    </content>
+                                </Tab>
+                            </tabs>
+                        </TabPane>
+                    </children>
+                </Pane>
+                <Pane fx:id="memoryPane" visible="false">
+                    <children>
+                        <Label fx:id="memoryLabel" layoutX="37.0" layoutY="365.0" />
+                        <LineChart fx:id="memoryChart" layoutX="18.0" layoutY="25.0" legendVisible="false" prefHeight="340.0" prefWidth="590.0" title="Memory Loading" titleSide="BOTTOM">
+                            <xAxis>
+                                <NumberAxis side="BOTTOM" />
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis side="LEFT" />
+                            </yAxis>
+                        </LineChart>
+                    </children>
+                </Pane>
+            </StackPane>
+        </VBox>
     </children>
-</Pane>
+</StackPane>
