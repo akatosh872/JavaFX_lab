@@ -2,12 +2,13 @@ package com.example.jfxtest;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Label;
-import javafx.scene.control.TabPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
@@ -24,11 +25,18 @@ public class DisplayController {
     private Pane memoryPane;
 
     @FXML
-    private Label osLabel;
+    private TableView<SystemProperty> osTable;
     @FXML
-    private Label cpuLabel;
+    private TableColumn<SystemProperty, String> osPropertyColumn;
     @FXML
-    private Label memoryLabel;
+    private TableColumn<SystemProperty, String> osValueColumn;
+
+    @FXML
+    private TableView<SystemProperty> cpuTable;
+    @FXML
+    private TableColumn<SystemProperty, String> cpuPropertyColumn;
+    @FXML
+    private TableColumn<SystemProperty, String> cpuValueColumn;
 
     @FXML
     private TabPane CPUtabs;
@@ -52,9 +60,15 @@ public class DisplayController {
 
     public void initialize() {
         systemController = new SystemController();
-        osLabel.setText(systemController.getOS());
-        cpuLabel.setText(systemController.getCPU());
-        memoryLabel.setText(systemController.getMemory());
+
+        osPropertyColumn.setCellValueFactory(cellData -> cellData.getValue().propertyNameProperty());
+        osValueColumn.setCellValueFactory(cellData -> cellData.getValue().propertyValueProperty());
+
+        cpuPropertyColumn.setCellValueFactory(cellData -> cellData.getValue().propertyNameProperty());
+        cpuValueColumn.setCellValueFactory(cellData -> cellData.getValue().propertyValueProperty());
+
+        osTable.setItems(getOSProperties());
+        cpuTable.setItems(getCPUProperties());
 
         initializeCharts();
         initializeTimelines();
@@ -68,6 +82,22 @@ public class DisplayController {
         });
 
         showOSInfo();
+    }
+
+    private ObservableList<SystemProperty> getOSProperties() {
+        ObservableList<SystemProperty> properties = FXCollections.observableArrayList();
+        String[] osInfo = systemController.getOS().split("\n");
+        for (String info : osInfo) {
+            String[] parts = info.split(": ");
+            properties.add(new SystemProperty(parts[0], parts[1]));
+        }
+        return properties;
+    }
+
+    private ObservableList<SystemProperty> getCPUProperties() {
+        ObservableList<SystemProperty> properties = FXCollections.observableArrayList();
+        properties.add(new SystemProperty("CPU", systemController.getCPU()));
+        return properties;
     }
 
     private void initializeCharts() {
@@ -102,7 +132,7 @@ public class DisplayController {
 
     private void updateCpuLoadChart() {
         double cpuLoad = systemController.getCPULoad();
-        cpuLoadSeries.getData().add(new XYChart.Data<>(cpuLoadIndex++, cpuLoad * 100));
+        cpuLoadSeries.getData().add(new XYChart.Data<>(cpuLoadIndex++, cpuLoad * 512));
         if (cpuLoadSeries.getData().size() > MAX_DATA_POINTS) {
             cpuLoadSeries.getData().remove(0);
         }

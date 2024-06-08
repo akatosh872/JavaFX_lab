@@ -6,8 +6,11 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
@@ -37,33 +40,37 @@
                 </menus>
             </MenuBar>
             <StackPane>
-                <Pane fx:id="osPane" visible="false">
+                <AnchorPane fx:id="osPane" visible="false">
                     <children>
-                        <Label fx:id="osLabel" layoutX="10.0" layoutY="5.0">
-                            <font>
-                                <Font size="16.0" />
-                            </font>
-                        </Label>
+                        <TableView fx:id="osTable" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+                            <columns>
+                                <TableColumn fx:id="osPropertyColumn" text="Property" />
+                                <TableColumn fx:id="osValueColumn" text="Value" />
+                            </columns>
+                        </TableView>
                     </children>
-                </Pane>
-                <Pane fx:id="cpuPane" visible="false">
+                </AnchorPane>
+                <AnchorPane fx:id="cpuPane" visible="false">
                     <children>
-                        <TabPane fx:id="CPUtabs" prefHeight="455.0" prefWidth="640.0">
+                        <TabPane fx:id="CPUtabs" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
                             <tabs>
                                 <Tab closable="false" text="Information">
                                     <content>
-                                        <Label fx:id="cpuLabel">
-                                            <font>
-                                                <Font size="16.0" />
-                                            </font>
-                                        </Label>
+                                        <AnchorPane>
+                                            <TableView fx:id="cpuTable" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+                                                <columns>
+                                                    <TableColumn fx:id="cpuPropertyColumn" text="Property" />
+                                                    <TableColumn fx:id="cpuValueColumn" text="Value" />
+                                                </columns>
+                                            </TableView>
+                                        </AnchorPane>
                                     </content>
                                 </Tab>
                                 <Tab closable="false" text="CPU Loading">
                                     <content>
-                                        <Pane fx:id="cpuLoadPane" prefHeight="200.0" prefWidth="200.0">
+                                        <AnchorPane fx:id="cpuLoadPane">
                                             <children>
-                                                <LineChart fx:id="cpuLoadChart" animated="false" legendVisible="false" title="CPU loading" titleSide="BOTTOM">
+                                                <LineChart fx:id="cpuLoadChart" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" animated="false" legendVisible="false" title="CPU loading" titleSide="BOTTOM">
                                                     <xAxis>
                                                         <NumberAxis side="BOTTOM" />
                                                     </xAxis>
@@ -72,17 +79,16 @@
                                                     </yAxis>
                                                 </LineChart>
                                             </children>
-                                        </Pane>
+                                        </AnchorPane>
                                     </content>
                                 </Tab>
                             </tabs>
                         </TabPane>
                     </children>
-                </Pane>
-                <Pane fx:id="memoryPane" visible="false">
+                </AnchorPane>
+                <AnchorPane fx:id="memoryPane" visible="false">
                     <children>
-                        <Label fx:id="memoryLabel" layoutX="37.0" layoutY="365.0" />
-                        <LineChart fx:id="memoryChart" layoutX="18.0" layoutY="25.0" legendVisible="false" prefHeight="340.0" prefWidth="590.0" title="Memory Loading" titleSide="BOTTOM">
+                        <LineChart fx:id="memoryChart" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" animated="false" legendVisible="false" title="Memory Loading" titleSide="BOTTOM">
                             <xAxis>
                                 <NumberAxis side="BOTTOM" />
                             </xAxis>
@@ -91,7 +97,7 @@
                             </yAxis>
                         </LineChart>
                     </children>
-                </Pane>
+                </AnchorPane>
             </StackPane>
         </VBox>
     </children>
