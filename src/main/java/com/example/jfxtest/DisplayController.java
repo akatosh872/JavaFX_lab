@@ -12,8 +12,12 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
+import oshi.hardware.GlobalMemory;
 
 public class DisplayController {
+
+    private static final double BYTES_IN_GIGABYTE = 1024 * 1024 * 1024;
+
     @FXML
     private StackPane mainPanel;
 
@@ -56,6 +60,9 @@ public class DisplayController {
     private XYChart.Series<Number, Number> memorySeries;
     private int memoryIndex = 0;
 
+    @FXML
+    private Label memoryLabel;
+
     private static final int MAX_DATA_POINTS = 10;
 
     public void initialize() {
@@ -96,7 +103,12 @@ public class DisplayController {
 
     private ObservableList<SystemProperty> getCPUProperties() {
         ObservableList<SystemProperty> properties = FXCollections.observableArrayList();
-        properties.add(new SystemProperty("CPU", systemController.getCPU()));
+        String[] cpuInfo = systemController.getCPU().split("\n");
+        for (String info : cpuInfo) {
+            String[] parts = info.split(": ");
+            properties.add(new SystemProperty(parts[0], parts[1]));
+        }
+
         return properties;
     }
 
@@ -105,11 +117,17 @@ public class DisplayController {
         cpuLoadChart.getData().add(cpuLoadSeries);
         ((NumberAxis) cpuLoadChart.getXAxis()).setForceZeroInRange(false);
         cpuLoadChart.setAnimated(false);
+        ((NumberAxis) cpuLoadChart.getYAxis()).setAutoRanging(false);
+        ((NumberAxis) cpuLoadChart.getYAxis()).setLowerBound(0);
+        ((NumberAxis) cpuLoadChart.getYAxis()).setUpperBound(100);
 
         memorySeries = new XYChart.Series<>();
         memoryChart.getData().add(memorySeries);
         ((NumberAxis) memoryChart.getXAxis()).setForceZeroInRange(false);
         memoryChart.setAnimated(false);
+        ((NumberAxis) memoryChart.getYAxis()).setAutoRanging(false);
+        ((NumberAxis) memoryChart.getYAxis()).setLowerBound(0);
+        ((NumberAxis) memoryChart.getYAxis()).setUpperBound(100);
     }
 
     private void initializeTimelines() {
@@ -128,6 +146,8 @@ public class DisplayController {
         }
         ((NumberAxis) memoryChart.getXAxis()).setLowerBound(memoryIndex - MAX_DATA_POINTS);
         ((NumberAxis) memoryChart.getXAxis()).setUpperBound(memoryIndex - 1);
+        GlobalMemory memory = systemController.getMemory();
+        memoryLabel.setText(String.format("Used Memory: %.2f/%.2f", (memory.getTotal()-memory.getAvailable())/BYTES_IN_GIGABYTE, memory.getTotal()/BYTES_IN_GIGABYTE));
     }
 
     private void updateCpuLoadChart() {

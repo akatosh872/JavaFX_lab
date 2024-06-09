@@ -6,15 +6,13 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 <StackPane fx:id="mainPanel" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.jfxtest.DisplayController">
     <children>
@@ -42,7 +40,7 @@
             <StackPane>
                 <AnchorPane fx:id="osPane" visible="false">
                     <children>
-                        <TableView fx:id="osTable" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+                        <TableView fx:id="osTable" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
                             <columns>
                                 <TableColumn fx:id="osPropertyColumn" text="Property" />
                                 <TableColumn fx:id="osValueColumn" text="Value" />
@@ -52,12 +50,12 @@
                 </AnchorPane>
                 <AnchorPane fx:id="cpuPane" visible="false">
                     <children>
-                        <TabPane fx:id="CPUtabs" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+                        <TabPane fx:id="CPUtabs" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
                             <tabs>
                                 <Tab closable="false" text="Information">
                                     <content>
                                         <AnchorPane>
-                                            <TableView fx:id="cpuTable" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+                                            <TableView fx:id="cpuTable" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
                                                 <columns>
                                                     <TableColumn fx:id="cpuPropertyColumn" text="Property" />
                                                     <TableColumn fx:id="cpuValueColumn" text="Value" />
@@ -70,7 +68,7 @@
                                     <content>
                                         <AnchorPane fx:id="cpuLoadPane">
                                             <children>
-                                                <LineChart fx:id="cpuLoadChart" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" animated="false" legendVisible="false" title="CPU loading" titleSide="BOTTOM">
+                                                <LineChart fx:id="cpuLoadChart" animated="false" legendVisible="false" title="CPU loading" titleSide="BOTTOM" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
                                                     <xAxis>
                                                         <NumberAxis side="BOTTOM" />
                                                     </xAxis>
@@ -88,14 +86,15 @@
                 </AnchorPane>
                 <AnchorPane fx:id="memoryPane" visible="false">
                     <children>
-                        <LineChart fx:id="memoryChart" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" animated="false" legendVisible="false" title="Memory Loading" titleSide="BOTTOM">
-                            <xAxis>
-                                <NumberAxis side="BOTTOM" />
-                            </xAxis>
-                            <yAxis>
-                                <NumberAxis side="LEFT" />
-                            </yAxis>
-                        </LineChart>
+                      <LineChart fx:id="memoryChart" animated="false" legendVisible="false" title="Memory Loading" titleSide="BOTTOM" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+                          <xAxis>
+                              <NumberAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                              <NumberAxis side="LEFT" />
+                          </yAxis>
+                      </LineChart>
+                        <Label fx:id="memoryLabel" alignment="BOTTOM_LEFT" contentDisplay="BOTTOM" layoutY="400.0" prefHeight="25.0" prefWidth="205.0" text="Used Memory: 0%" />
                     </children>
                 </AnchorPane>
             </StackPane>

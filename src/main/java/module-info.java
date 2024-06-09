@@ -4,6 +4,7 @@ module com.example.jfxtest {
     requires javafx.media;
     requires com.github.oshi;
     requires java.management;
+    requires jSensors;
 
 
     opens com.example.jfxtest to javafx.fxml;

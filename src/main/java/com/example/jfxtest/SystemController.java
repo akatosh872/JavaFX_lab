@@ -38,8 +38,8 @@ public class SystemController {
         return String.format("%02d:%02d:%02d", hours, minutes, secs);
     }
 
-    public String getMemory() {
-        return hardware.getMemory().toString();
+    public GlobalMemory getMemory() {
+        return hardware.getMemory();
     }
 
     public double getUsedMemoryPercentage() {
@@ -49,7 +49,14 @@ public class SystemController {
 
     public String getCPU() {
         CentralProcessor processor = hardware.getProcessor();
-        return processor.toString();
+        StringBuilder cpuInfo = new StringBuilder();
+
+        cpuInfo.append("Physical CPU packages: ").append(processor.getPhysicalPackageCount()).append("\n");
+        cpuInfo.append("Physical CPU cores: ").append(processor.getPhysicalProcessorCount()).append("\n");
+        cpuInfo.append("Logical CPUs: ").append(processor.getLogicalProcessorCount()).append("\n");
+        cpuInfo.append("Switches: ").append(processor.getContextSwitches()).append("\n");
+        cpuInfo.append("Identifier: ").append(processor.getProcessorIdentifier()).append("\n");
+        return cpuInfo.toString();
     }
 
     public Double getCPULoad() {
